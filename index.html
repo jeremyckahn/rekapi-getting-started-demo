@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="rekapi-underscore-shifty.min.js"></script>
+</head>
+<body>
+  <canvas></canvas>
+  <script>
+  var context = document.getElementsByTagName('canvas')[0].getContext('2d');
+  var rekapi = new Rekapi(context);
+
+  var actor = new Rekapi.Actor({
+    // Draws a circle.
+    'render': function (context, state) {
+      context.beginPath();
+      context.arc(
+        state.x || 50,
+        state.y || 50,
+        state.radius || 50,
+        0,
+        Math.PI*2,
+        true);
+      context.fillStyle = state.color || '#f0f';
+      context.fill();
+      context.closePath();
+    }
+  });
+
+  rekapi.addActor(actor);
+
+  actor.keyframe(0, {
+      x: 50,
+      y: 50
+    })
+    .keyframe(1000, {
+      x: 200,
+      y: 100
+    }, 'easeOutExpo');
+
+  rekapi.play();
+
+  </script>
+</body>
+</html>
